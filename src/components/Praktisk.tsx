@@ -118,47 +118,70 @@ function ProgramContent() {
 }
 
 function PriserContent() {
-  const { prices, payment } = tripConfig;
+  const { prices, payment, included } = tripConfig;
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-2">
-        <div className="bg-white/5 rounded-lg p-3 md:p-4">
-          <div className="text-xl md:text-2xl font-bold text-white">
-            {prices.villa.toLocaleString()} kr
-          </div>
-          <p className="text-zinc-500 text-xs">Uten sluttvask</p>
-        </div>
-        <div className="bg-gradient-to-br from-orange-500/20 to-amber-500/20 border border-orange-500/30 rounded-lg p-3 md:p-4">
-          <div className="text-xl md:text-2xl font-bold text-orange-400">
-            {prices.villaWithCleaning.toLocaleString()} kr
-          </div>
-          <p className="text-orange-300/70 text-xs">Med sluttvask ✓</p>
-        </div>
-      </div>
-
-      <div className="bg-white/5 rounded-lg p-3 space-y-1.5">
-        <div className="flex justify-between text-sm">
-          <span className="text-zinc-500">Konto</span>
-          <span className="text-zinc-300">{payment.accountNumber}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-zinc-500">Vipps</span>
-          <span className="text-zinc-300">{payment.vipps}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-zinc-500">Frist</span>
-          <span className="text-zinc-300">{payment.deadline}</span>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {["7 netter", "Basseng", "Jacuzzi", "Alle fasiliteter"].map((item) => (
-          <span key={item} className="inline-flex items-center gap-1 text-zinc-400 text-xs bg-white/5 px-2 py-1 rounded">
-            <Check className="w-3 h-3 text-green-500" />
-            {item}
+      {/* Per person price - highlighted */}
+      <div className="bg-gradient-to-br from-orange-500/20 to-amber-500/20 border border-orange-500/30 rounded-xl p-4">
+        <p className="text-orange-300/70 text-xs mb-1">Pris per person</p>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl md:text-3xl font-bold text-orange-400">
+            ~{prices.perPersonNOK.toLocaleString()} kr
           </span>
-        ))}
+          <span className="text-zinc-500 text-sm">
+            (€{prices.perPerson})
+          </span>
+        </div>
+        <p className="text-zinc-500 text-xs mt-1">+ kommuneavgift €{prices.municipalityFeeTotal}/person</p>
+      </div>
+
+      {/* Total price */}
+      <div className="bg-white/5 rounded-lg p-3">
+        <div className="flex justify-between items-center">
+          <span className="text-zinc-400 text-sm">Total villa ({tripConfig.totalParticipants} pers.)</span>
+          <span className="text-white font-semibold">€{prices.villaTotal.toLocaleString()}</span>
+        </div>
+      </div>
+
+      {/* Payment schedule */}
+      <div className="bg-white/5 rounded-lg p-3 space-y-2">
+        <p className="text-zinc-300 text-sm font-medium mb-2">Betalingsplan</p>
+        <div className="flex justify-between text-sm">
+          <span className="text-zinc-500">Ved booking</span>
+          <span className="text-zinc-300">{payment.schedule.atBooking}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-zinc-500">90 dager før</span>
+          <span className="text-zinc-300">{payment.schedule.ninetyDaysBefore}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-zinc-500">1 uke før</span>
+          <span className="text-zinc-300">{payment.schedule.oneWeekBefore}</span>
+        </div>
+        <div className="border-t border-white/10 pt-2 mt-2">
+          <p className="text-zinc-500 text-xs">
+            Betaling via {payment.methods.join(", ")}
+          </p>
+        </div>
+      </div>
+
+      {/* Included */}
+      <div>
+        <p className="text-zinc-300 text-sm font-medium mb-2">Inkludert i prisen</p>
+        <div className="flex flex-wrap gap-1.5">
+          {included.slice(0, 6).map((item) => (
+            <span key={item} className="inline-flex items-center gap-1 text-zinc-400 text-xs bg-white/5 px-2 py-1 rounded">
+              <Check className="w-3 h-3 text-green-500" />
+              {item}
+            </span>
+          ))}
+          {included.length > 6 && (
+            <span className="text-zinc-600 text-xs px-2 py-1">
+              +{included.length - 6} mer
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

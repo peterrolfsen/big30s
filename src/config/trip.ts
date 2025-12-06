@@ -51,18 +51,71 @@ export const tripConfig = {
   totalParticipants: 20,
   suites: 10,
 
-  // Priser (i NOK)
+  // Priser
   prices: {
-    villa: 8750,
-    villaWithCleaning: 9000,
-    currency: "kr",
+    // Totalpris villa: €17,120 for 20 personer (7-14 juni 2026)
+    villaTotal: 17120, // EUR
+    perPerson: 856, // EUR (€17,120 / 20)
+    perPersonNOK: 9850, // NOK (ca. 11.5 kr per euro)
+
+    // Tilleggsavgifter
+    municipalityFee: 2, // EUR per natt per person (13+), maks 7 netter = €14 per person
+    municipalityFeeTotal: 14, // EUR per person
+
+    // Depositum (refunderes hvis ingen skader)
+    damageDeposit: 3500, // EUR totalt
+
+    // Valgfritt: Daglig rengjøring
+    dailyCleaning: 100, // EUR per dag (3 timer)
+
+    currency: "EUR",
   },
 
   // Betalingsinfo
   payment: {
-    accountNumber: "Kommer snart",
-    vipps: "Kommer snart",
+    methods: ["Bank Transfer", "Wise.com", "PayPal (+5%)"],
+    schedule: {
+      atBooking: "50% av totalpris",
+      ninetyDaysBefore: "50% av totalpris",
+      oneWeekBefore: "Depositum €3,500",
+    },
     deadline: "Kommer snart",
+  },
+
+  // Inkludert i prisen
+  included: [
+    "Oppvarmet utendørs- og innendørsbasseng",
+    "Utendørs jacuzzi og sauna",
+    "Tennisbane og minigolf",
+    "Gym, kinorom og spillrom",
+    "Sykler",
+    "Vann og strøm",
+    "AC (varme/kjøling)",
+    "WiFi og TV",
+    "Laken og håndklær (bad, ansikt, basseng)",
+    "Hage- og bassengvedlikehold",
+    "Rengjøring ved ankomst og avreise",
+  ],
+
+  // Partnerrabatter - Penina Hotel Golf & Resort (500m fra villaen)
+  golfDiscounts: {
+    teeTimes: "10-15%",
+    buggiesAndTrolleys: "15%",
+    golfStore: "10%",
+    restaurantsAndBars: "15%",
+    note: "Tee times må bookes gjennom SpringVillas for rabatt. Andre rabatter med armbånd.",
+    courses: [
+      { name: "Championship / Henry Cotton Golf Course", type: "main", handicapMen: 28, handicapWomen: 36 },
+      { name: "Resort Golf Course", type: "resort" },
+    ],
+  },
+
+  // Ekstra tjenester
+  extras: {
+    chefService: "Kan arrangeres etter booking - pris avhenger av meny",
+    carRental: "Lei på flyplassen eller få bilen levert til villaen",
+    dailyCleaning: "€100/dag (3 timer)",
+    activities: ["Surfing (Alvor Kitesurf Center)", "Gokart (Algarve International Racetrack)", "Fallskjermhopping", "Yachtturer"],
   },
 };
 

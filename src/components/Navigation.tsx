@@ -43,21 +43,20 @@ export default function Navigation() {
     <>
       {/* Desktop: Top navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 hidden md:block ${
-          isScrolled ? "glass-strong py-3" : "py-6"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 hidden md:block bg-[#0a0a0b] ${
+          isScrolled ? "py-3 border-b border-white/5" : "py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <a href="#" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <MapPin className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/20">
+                <span className="text-white font-black text-lg">30</span>
               </div>
               <div>
-                <span className="text-lg font-bold tracking-tight">
-                  <span className="gradient-text">ALGARVE</span>
-                  <span className="text-zinc-500 font-normal ml-2">2026</span>
+                <span className="text-xl font-black tracking-tight bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                  Big Thirties
                 </span>
               </div>
             </a>
@@ -86,24 +85,6 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile: Minimal top bar */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 md:hidden ${
-          isScrolled ? "glass-strong py-3" : "py-4"
-        }`}
-      >
-        <div className="px-6">
-          <a href="#" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-              <MapPin className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-base font-bold tracking-tight">
-              <span className="gradient-text">ALGARVE</span>
-              <span className="text-zinc-500 font-normal ml-1.5 text-sm">2026</span>
-            </span>
-          </a>
-        </div>
-      </div>
 
       {/* Mobile: Bottom navigation bar - alltid synlig */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden">

@@ -94,7 +94,7 @@ export default function Hero() {
         </div>
 
         {/* Main title */}
-        <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3 md:mb-5 drop-shadow-lg">
+        <h1 className="text-[7vw] sm:text-4xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3 md:mb-5 drop-shadow-lg whitespace-nowrap">
           <span className="gradient-text" style={{ textShadow: '0 2px 20px rgba(251,146,60,0.4)' }}>Den store 30 års turen</span>
         </h1>
         <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
@@ -103,10 +103,6 @@ export default function Hero() {
             Algarve, Portugal
           </p>
         </div>
-
-        <p className="text-base md:text-xl text-zinc-400 mb-8 md:mb-12 drop-shadow-md">
-          {tripConfig.celebrants.length} jubilanter · {tripConfig.totalParticipants} venner · 1 uke
-        </p>
 
         {/* Countdown - kompakt på mobil */}
         <div className="flex justify-center gap-2 md:gap-4 mb-12 md:mb-20">

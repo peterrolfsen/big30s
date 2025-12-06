@@ -668,10 +668,90 @@ export default function Program() {
             </div>
           </div>
 
-          {/* Mobile timeline - horizontal scroll */}
+          {/* Mobile timeline - clean horizontal design */}
           <div className="md:hidden">
-            <div className="glass rounded-xl p-3">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+            <div className="glass rounded-2xl p-4">
+              {/* Progress bar */}
+              <div className="relative h-1 bg-zinc-800 rounded-full mb-4 overflow-hidden">
+                <div
+                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${((selectedDay + 1) / programData.length) * 100}%`,
+                    background: `linear-gradient(90deg, ${programData[0].color}, ${programData[selectedDay].color})`,
+                    boxShadow: `0 0 10px ${programData[selectedDay].color}60`,
+                  }}
+                />
+              </div>
+
+              {/* Day selector row */}
+              <div className="flex items-center justify-between gap-2">
+                {/* Prev button */}
+                <button
+                  onClick={goToPrev}
+                  disabled={selectedDay === 0}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
+                    selectedDay === 0
+                      ? "opacity-30"
+                      : "bg-zinc-800 active:scale-95"
+                  }`}
+                >
+                  <ChevronLeft className="w-5 h-5 text-zinc-400" />
+                </button>
+
+                {/* Current day display */}
+                <div
+                  className="flex-1 flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300"
+                  style={{
+                    backgroundColor: `${programData[selectedDay].color}15`,
+                    borderLeft: `3px solid ${programData[selectedDay].color}`,
+                  }}
+                >
+                  {/* Icon */}
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0"
+                    style={{
+                      backgroundColor: programData[selectedDay].color,
+                    }}
+                  >
+                    {(() => {
+                      const DayIcon = programData[selectedDay].Icon;
+                      return <DayIcon className="w-5 h-5" />;
+                    })()}
+                  </div>
+
+                  {/* Info */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-white">
+                        Dag {selectedDay + 1}
+                      </span>
+                      <span className="text-zinc-600">•</span>
+                      <span className="text-xs text-zinc-500 truncate">
+                        {programData[selectedDay].dayName}
+                      </span>
+                    </div>
+                    <p className="text-sm font-semibold text-white truncate">
+                      {programData[selectedDay].title}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Next button */}
+                <button
+                  onClick={goToNext}
+                  disabled={selectedDay === programData.length - 1}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
+                    selectedDay === programData.length - 1
+                      ? "opacity-30"
+                      : "bg-zinc-800 active:scale-95"
+                  }`}
+                >
+                  <ChevronRight className="w-5 h-5 text-zinc-400" />
+                </button>
+              </div>
+
+              {/* Day dots for visual progress */}
+              <div className="flex justify-center gap-1.5 mt-4">
                 {programData.map((day, index) => {
                   const isActive = selectedDay === index;
                   const isPast = index < selectedDay;
@@ -680,106 +760,27 @@ export default function Program() {
                     <button
                       key={day.date}
                       onClick={() => goToDay(index)}
-                      className={`flex-shrink-0 snap-center p-2 rounded-xl transition-all duration-300 min-w-[72px] relative ${
-                        isActive ? "scale-105" : ""
-                      }`}
-                      style={{
-                        backgroundColor: isActive
-                          ? `${day.color}20`
-                          : isPast
-                            ? `${day.color}10`
-                            : "transparent",
-                        boxShadow: isActive ? `0 0 20px ${day.color}30` : undefined,
-                      }}
+                      className="p-1"
+                      aria-label={`Dag ${index + 1}: ${day.title}`}
                     >
-                      {/* Active indicator ring */}
-                      {isActive && (
-                        <div
-                          className="absolute inset-0 rounded-xl"
-                          style={{
-                            border: `2px solid ${day.color}`,
-                            boxShadow: `inset 0 0 10px ${day.color}20`,
-                          }}
-                        />
-                      )}
-
-                      <div className="flex flex-col items-center gap-1 relative z-10">
-                        {/* Day number badge */}
-                        <div
-                          className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold ${
-                            isActive || isPast ? "text-white" : "text-zinc-500"
-                          }`}
-                          style={{
-                            backgroundColor: isActive || isPast ? day.color : "rgba(63, 63, 70, 0.8)",
-                          }}
-                        >
-                          {index + 1}
-                        </div>
-
-                        {/* Icon */}
-                        <div
-                          className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
-                            isActive
-                              ? "text-white"
-                              : isPast
-                                ? "text-white/80"
-                                : "text-zinc-500"
-                          }`}
-                          style={{
-                            backgroundColor: isActive
-                              ? day.color
-                              : isPast
-                                ? `${day.color}50`
-                                : "rgba(39, 39, 42, 0.8)",
-                            boxShadow: isActive
-                              ? `0 4px 15px ${day.color}40`
-                              : undefined,
-                          }}
-                        >
-                          <day.Icon className={`${isActive ? "w-5 h-5" : "w-4 h-4"}`} />
-                        </div>
-
-                        {/* Day name */}
-                        <p
-                          className={`text-[10px] font-semibold ${
-                            isActive ? "text-white" : isPast ? "text-zinc-400" : "text-zinc-500"
-                          }`}
-                        >
-                          {day.dayName.slice(0, 3)}
-                        </p>
-                      </div>
+                      <div
+                        className={`rounded-full transition-all duration-300 ${
+                          isActive ? "w-6 h-2" : "w-2 h-2"
+                        }`}
+                        style={{
+                          backgroundColor: isActive
+                            ? day.color
+                            : isPast
+                              ? `${day.color}60`
+                              : "rgba(63, 63, 70, 0.8)",
+                          boxShadow: isActive
+                            ? `0 0 8px ${day.color}60`
+                            : undefined,
+                        }}
+                      />
                     </button>
                   );
                 })}
-              </div>
-
-              {/* Mobile navigation */}
-              <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/5">
-                <button
-                  onClick={goToPrev}
-                  disabled={selectedDay === 0}
-                  className={`p-2 rounded-lg ${
-                    selectedDay === 0 ? "opacity-30" : "active:bg-white/10"
-                  }`}
-                >
-                  <ChevronLeft className="w-5 h-5 text-zinc-400" />
-                </button>
-
-                <div className="text-center">
-                  <p className="text-xs text-zinc-500">
-                    Dag {selectedDay + 1} av {programData.length}
-                  </p>
-                </div>
-
-                <button
-                  onClick={goToNext}
-                  disabled={selectedDay === programData.length - 1}
-                  className={`p-2 rounded-lg ${
-                    selectedDay === programData.length - 1 ? "opacity-30" : "active:bg-white/10"
-                  }`}
-                >
-                  <ChevronRight className="w-5 h-5 text-zinc-400" />
-                </button>
               </div>
             </div>
           </div>
@@ -829,17 +830,17 @@ export default function Program() {
               borderWidth: "1px",
             }}
           >
-            {/* Day header */}
+            {/* Day header - Desktop only (mobile has separate header) */}
             <div
-              className="p-4 md:p-6 border-b border-white/5 transition-all duration-500"
+              className="hidden md:block p-6 border-b border-white/5 transition-all duration-500"
               style={{
                 background: `linear-gradient(135deg, ${programData[selectedDay].color}15 0%, transparent 100%)`,
               }}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 md:gap-4">
+                <div className="flex items-center gap-4">
                   <div
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center text-white transition-all duration-300"
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-white transition-all duration-300"
                     style={{
                       backgroundColor: programData[selectedDay].color,
                       boxShadow: `0 0 30px ${programData[selectedDay].color}30`,
@@ -847,13 +848,13 @@ export default function Program() {
                   >
                     {(() => {
                       const DayIcon = programData[selectedDay].Icon;
-                      return <DayIcon className="w-6 h-6 md:w-8 md:h-8" />;
+                      return <DayIcon className="w-8 h-8" />;
                     })()}
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span
-                        className="text-[10px] md:text-xs font-bold tracking-wider px-2 py-0.5 rounded-full"
+                        className="text-xs font-bold tracking-wider px-2 py-0.5 rounded-full"
                         style={{
                           backgroundColor: `${programData[selectedDay].color}20`,
                           color: programData[selectedDay].color,
@@ -862,7 +863,7 @@ export default function Program() {
                         DAG {selectedDay + 1} AV {programData.length}
                       </span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white">
+                    <h3 className="text-2xl font-bold text-white">
                       {programData[selectedDay].title}
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
@@ -875,12 +876,32 @@ export default function Program() {
                 </div>
 
                 {/* Activity count */}
-                <div className="hidden sm:flex flex-col items-end">
-                  <span className="text-2xl md:text-3xl font-bold text-white">
+                <div className="flex flex-col items-end">
+                  <span className="text-3xl font-bold text-white">
                     {programData[selectedDay].activities.length}
                   </span>
                   <span className="text-xs text-zinc-500 uppercase tracking-wider">aktiviteter</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile mini header - just date */}
+            <div
+              className="md:hidden px-4 py-3 border-b border-white/5"
+              style={{
+                background: `linear-gradient(135deg, ${programData[selectedDay].color}10 0%, transparent 100%)`,
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-3.5 h-3.5 text-zinc-500" />
+                  <span className="text-zinc-400 text-sm">
+                    {programData[selectedDay].date}
+                  </span>
+                </div>
+                <span className="text-zinc-500 text-xs">
+                  {programData[selectedDay].activities.length} aktiviteter
+                </span>
               </div>
             </div>
 
