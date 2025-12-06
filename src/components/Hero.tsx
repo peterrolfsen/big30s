@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowDown, MapPin } from "lucide-react";
-import { tripConfig } from "@/config/trip";
+import { ArrowDown, MapPin, ExternalLink } from "lucide-react";
+import { tripConfig, villaConfig } from "@/config/trip";
 
 // Bakgrunnsbilder som roterer
 const heroImages = [
@@ -97,12 +97,23 @@ export default function Hero() {
         <h1 className="text-[7vw] sm:text-4xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3 md:mb-5 drop-shadow-lg whitespace-nowrap">
           <span className="gradient-text" style={{ textShadow: '0 2px 20px rgba(251,146,60,0.4)' }}>Den store 30 års turen</span>
         </h1>
-        <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
+        <div className="flex items-center justify-center gap-2 mb-6 md:mb-8">
           <MapPin className="w-4 h-4 md:w-5 md:h-5 text-zinc-400" />
           <p className="text-xl md:text-2xl lg:text-3xl font-medium text-zinc-300 drop-shadow-md">
             Algarve, Portugal
           </p>
         </div>
+
+        {/* Villa link */}
+        <a
+          href={villaConfig.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm md:text-base hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-105 mb-8 md:mb-12"
+        >
+          <span>Se villaen</span>
+          <ExternalLink className="w-4 h-4" />
+        </a>
 
         {/* Countdown - kompakt på mobil */}
         <div className="flex justify-center gap-2 md:gap-4 mb-12 md:mb-20">

@@ -976,10 +976,6 @@ export default function Program() {
           </div>
         </div>
 
-        {/* Note */}
-        <p className="text-center text-zinc-600 text-xs mt-6">
-          * Programmet er tentativt og kan endres. Aktiviteter vil bli bekreftet nærmere avreise.
-        </p>
       </div>
     </section>
   );

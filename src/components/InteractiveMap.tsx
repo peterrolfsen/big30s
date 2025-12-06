@@ -20,17 +20,15 @@ import {
   Bike,
   Footprints,
   Route,
-  Home,
   Loader2,
   Globe,
   ChevronUp,
   List,
 } from "lucide-react";
 
-// Villaens koordinater og adresse
+// Villaens koordinater
 const villaLocation = mapConfig.locations.find((loc) => loc.category === "villa");
 const villaCoords = villaLocation?.coordinates || mapConfig.center;
-const villaAddress = villaLocation?.address || "Tapada da Penina, n.º 26, 8500-051 Alvor";
 
 // Route data type
 interface RouteData {
@@ -344,46 +342,9 @@ export default function InteractiveMap() {
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 md:mb-4">
             Interaktivt Kart
           </h2>
-          <p className="text-zinc-500 text-sm md:text-lg max-w-2xl mb-4 md:mb-6">
+          <p className="text-zinc-500 text-sm md:text-lg max-w-2xl">
             Se alle steder vi kan besøke. Klikk på markørene for mer info!
           </p>
-
-          {/* Villa address card */}
-          <div className="glass rounded-xl p-3 md:p-5 inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            <div className="flex items-center gap-2 md:gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0">
-                <Home className="w-4 h-4 md:w-5 md:h-5 text-white" />
-              </div>
-              <div>
-                <p className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wider mb-0.5">
-                  Villaens adresse
-                </p>
-                <p className="text-white text-xs md:text-base font-medium">
-                  {villaAddress}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => copyAddress(villaAddress)}
-              className={`flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg text-xs md:text-sm transition-all ${
-                copiedAddress === villaAddress
-                  ? "bg-green-500/20 text-green-400"
-                  : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              {copiedAddress === villaAddress ? (
-                <>
-                  <Check className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  <span>Kopiert!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  <span>Kopier</span>
-                </>
-              )}
-            </button>
-          </div>
         </div>
 
         {/* Main layout - sidebar + map */}
