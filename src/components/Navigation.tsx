@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MapPin, Home, Users, Map, Info, CalendarDays } from "lucide-react";
+import { Home, Map, Info, CalendarDays, ExternalLink } from "lucide-react";
 
 const navItems = [
   { href: "#villa", label: "Villa", icon: Home },
-  { href: "#gjengen", label: "Gjengen", icon: Users },
+  { href: "#kart", label: "Kart", icon: Map },
   { href: "#program", label: "Program", icon: CalendarDays },
-  { href: "#kart", label: "Utforsk", icon: Map },
   { href: "#praktisk", label: "Praktisk", icon: Info },
 ];
 
@@ -50,16 +49,25 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/20">
-                <span className="text-white font-black text-lg">30</span>
-              </div>
-              <div>
+            <div className="flex items-center gap-4">
+              <a href="#" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/20">
+                  <span className="text-white font-black text-lg">30</span>
+                </div>
                 <span className="text-xl font-black tracking-tight bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
                   Big Thirties
                 </span>
-              </div>
-            </a>
+              </a>
+              <a
+                href="https://www.springvillas.net/VillaPeninaMajestic/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-all"
+              >
+                <ExternalLink className="w-3 h-3" />
+                Se villaen
+              </a>
+            </div>
 
             {/* Desktop menu */}
             <div className="flex items-center gap-1">

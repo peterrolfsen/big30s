@@ -9,13 +9,8 @@ import {
   Waves,
   Dumbbell,
   Tv,
-  UtensilsCrossed,
   Wifi,
-  AirVent,
-  Car,
-  MapPin,
   ExternalLink,
-  ImageIcon,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -63,13 +58,18 @@ export default function Villa() {
               ))}
             </div>
           ) : (
-            <div className="glass rounded-xl md:rounded-3xl p-6 md:p-16 text-center">
-              <ImageIcon className="w-10 h-10 md:w-16 md:h-16 text-zinc-600 mx-auto mb-3 md:mb-6" />
-              <p className="text-zinc-400 text-sm md:text-lg mb-1 md:mb-2">Bilder kommer snart</p>
-              <p className="text-zinc-600 text-[10px] md:text-sm">
-                Legg til bilder i /public/images/villa/
+            <a
+              href={villaConfig.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass rounded-xl md:rounded-3xl p-6 md:p-16 text-center block hover:bg-white/10 transition-colors group"
+            >
+              <ExternalLink className="w-10 h-10 md:w-16 md:h-16 text-zinc-600 group-hover:text-orange-500 mx-auto mb-3 md:mb-6 transition-colors" />
+              <p className="text-zinc-400 text-sm md:text-lg mb-1 md:mb-2 group-hover:text-white transition-colors">Se villaen her</p>
+              <p className="text-zinc-600 text-[10px] md:text-sm group-hover:text-orange-500 transition-colors">
+                springvillas.net
               </p>
-            </div>
+            </a>
           )}
         </div>
 
@@ -125,48 +125,6 @@ export default function Villa() {
               </div>
             );
           })}
-        </div>
-
-        {/* Location card */}
-        <div className="glass rounded-xl md:rounded-3xl p-4 md:p-8 lg:p-12">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 md:gap-8">
-            <div>
-              <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 flex items-center justify-center">
-                  <MapPin className="w-4 h-4 md:w-6 md:h-6 text-cyan-500" />
-                </div>
-                <h3 className="text-lg md:text-2xl font-semibold text-white">Beliggenhet</h3>
-              </div>
-              <p className="text-zinc-400 text-xs md:text-base mb-3 md:mb-6 max-w-md">{villaConfig.address}</p>
-              <a
-                href={villaConfig.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-orange-500 hover:text-orange-400 transition-colors text-xs md:text-base"
-              >
-                <span>Se villaens nettside</span>
-                <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4" />
-              </a>
-            </div>
-
-            <div className="grid grid-cols-5 md:grid-cols-3 lg:grid-cols-2 gap-1.5 md:gap-3">
-              {Object.entries(villaConfig.distances).map(([key, value]) => {
-                const labels: Record<string, string> = {
-                  portimao: "Portimão",
-                  alvor: "Alvor",
-                  nearestBeach: "Strand",
-                  faroAirport: "Fly",
-                  golfCourse: "Golf",
-                };
-                return (
-                  <div key={key} className="text-center p-2 md:p-4 rounded-lg md:rounded-xl bg-white/5">
-                    <div className="text-sm md:text-xl font-bold text-white">{value}</div>
-                    <div className="text-zinc-500 text-[10px] md:text-sm">{labels[key]}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </div>
     </section>

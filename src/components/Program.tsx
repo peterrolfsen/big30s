@@ -17,8 +17,6 @@ import {
   Car,
   Music,
   Sparkles,
-  Clock,
-  MapPin,
   Target,
   Landmark,
   PlaneTakeoff,
@@ -905,72 +903,26 @@ export default function Program() {
               </div>
             </div>
 
-          {/* Activities */}
-          <div className="p-4 md:p-6">
-            <div className="relative">
-              {/* Vertical timeline line */}
-              <div className="absolute left-[19px] md:left-[23px] top-2 bottom-2 w-0.5 bg-white/10 rounded-full" />
-
-              <div className="space-y-4 md:space-y-6">
-                {programData[selectedDay].activities.map((activity, index) => (
-                  <div key={index} className="relative flex gap-4 md:gap-6">
-                    {/* Timeline dot */}
-                    <div
-                      className={`relative z-10 w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                        activity.highlight
-                          ? "text-white"
-                          : "bg-zinc-800/80 text-zinc-400"
-                      }`}
-                      style={{
-                        backgroundColor: activity.highlight
-                          ? programData[selectedDay].color
-                          : undefined,
-                      }}
-                    >
-                      {activity.icon}
-                    </div>
-
-                    {/* Content */}
-                    <div
-                      className={`flex-1 pb-4 md:pb-6 ${
-                        index === programData[selectedDay].activities.length - 1
-                          ? ""
-                          : "border-b border-white/5"
-                      }`}
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
-                        <span
-                          className="text-sm font-medium"
-                          style={{
-                            color: activity.highlight
-                              ? programData[selectedDay].color
-                              : "#a1a1aa",
-                          }}
-                        >
-                          <Clock className="w-3 h-3 inline mr-1" />
-                          {activity.time}
-                        </span>
-                        {activity.location && (
-                          <span className="text-xs text-zinc-600 flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {activity.location}
-                          </span>
-                        )}
-                      </div>
-                      <h4
-                        className={`font-semibold mb-1 ${
-                          activity.highlight ? "text-white text-lg" : "text-zinc-300"
-                        }`}
-                      >
-                        {activity.title}
-                      </h4>
-                      {activity.description && (
-                        <p className="text-zinc-500 text-sm">{activity.description}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+          {/* Coming soon message */}
+          <div className="p-8 md:p-12">
+            <div className="flex flex-col items-center justify-center text-center py-8">
+              <div
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
+                style={{
+                  backgroundColor: `${programData[selectedDay].color}20`,
+                }}
+              >
+                <Sparkles
+                  className="w-8 h-8"
+                  style={{ color: programData[selectedDay].color }}
+                />
               </div>
+              <p className="text-xl md:text-2xl font-semibold text-zinc-400">
+                Kommer snart
+              </p>
+              <p className="text-zinc-600 text-sm mt-2">
+                Detaljert program for denne dagen publiseres snart
+              </p>
             </div>
           </div>
           </div>

@@ -1,7 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Villa from "@/components/Villa";
-import Celebrants from "@/components/Celebrants";
 import Program from "@/components/Program";
 import InteractiveMap from "@/components/InteractiveMap";
 import Praktisk from "@/components/Praktisk";
@@ -16,9 +15,8 @@ export default function Home() {
       <Navigation />
       <Hero />
       <Villa />
-      <Celebrants />
-      <Program />
       <InteractiveMap />
+      <Program />
       <Praktisk />
       <Footer />
     </main>
