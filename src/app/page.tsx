@@ -14,10 +14,8 @@ export default function Home() {
 
       <Navigation />
       <Hero />
-      <Villa />
       <InteractiveMap />
       <Program />
-      <Praktisk />
       <Footer />
     </main>
   );
