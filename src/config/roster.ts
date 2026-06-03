@@ -163,7 +163,7 @@ export const teams: DraftTeam[] = [
         video: "video/peter.mp4",
         catchphrase: "«Jeg har en plan. Hør her.»",
         signatureMove: "Neck it powerup",
-        stats: { styrke: 80, fart: 75, fest: 95, humor: 80, taktikk: 65 },
+        stats: { styrke: 90, fart: 75, fest: 75, humor: 80, taktikk: 65 },
       },
       {
         id: "joachim",

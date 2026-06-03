@@ -9,6 +9,7 @@ import {
   accentStyles,
   playerVideoSrc,
   playerAudioSrc,
+  playerImageSrc,
   type RosterPlayer,
   type DraftTeam,
 } from "@/config/roster";
@@ -134,8 +135,10 @@ export default function FighterPanel({
             {videoSrc ? (
               <video
                 src={videoSrc}
+                poster={playerImageSrc(player.img) ?? undefined}
                 autoPlay
                 playsInline
+                preload="auto"
                 onEnded={() => {
                   setVideoEnded(true);
                   onMediaEnd?.();

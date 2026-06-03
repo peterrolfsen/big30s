@@ -8,6 +8,7 @@ import {
   PACING,
   teamAvgPower,
   playerVoiceSrc,
+  playerVideoSrc,
   type RosterPlayer,
   type DraftTeam,
 } from "@/config/roster";
@@ -21,6 +22,16 @@ import ConfettiEffect from "@/components/games/ConfettiEffect";
 
 // Alle spillere flatet ut (brukt til slot-machine-utvalget).
 const ALL_PLAYERS = teams.flatMap((t) => t.players);
+
+// Alle video-URL-er — brukes til å forhåndslaste klippene i bakgrunnen,
+// slik at reveal-videoen starter umiddelbart (ikke ~1 s nedlasting per klikk).
+const ALL_VIDEO_SRCS = Array.from(
+  new Set(
+    ALL_PLAYERS.map((p) => playerVideoSrc(p.video)).filter(
+      (s): s is string => !!s
+    )
+  )
+);
 
 // Antall kolonner i rosteret: alltid 2 rader, uansett antall spillere,
 // slik at alle fighterne er synlige samtidig uten scrolling.
@@ -572,6 +583,16 @@ export default function DraftScreen() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_52%,rgba(0,0,0,0.65)_100%)]" />
 
       <ConfettiEffect active={confetti} />
+
+      {/* Forhåndslaster reveal-videoene i bakgrunnen så snart man er forbi
+          startskjermen — da starter klippet umiddelbart ved reveal. */}
+      {state.stage !== "start" && (
+        <div aria-hidden className="hidden">
+          {ALL_VIDEO_SRCS.map((src) => (
+            <video key={src} src={src} preload="auto" muted playsInline />
+          ))}
+        </div>
+      )}
 
       {/* Hype-callout ved fullført lag */}
       {callout && state.stage === "teamflash" && (
