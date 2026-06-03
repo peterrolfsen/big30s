@@ -368,3 +368,302 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ========== TURLEKER ANIMASJONER ========== */
+
+/* Podium rise for winner reveal */
+@keyframes podium-rise {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-podium-rise {
+  animation: podium-rise 0.6s ease-out forwards;
+}
+
+/* Pulse glow for interactive elements */
+@keyframes pulse-glow-orange {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow-orange 2s ease-in-out infinite;
+}
+
+/* Number count up */
+@keyframes count-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-count-up {
+  animation: count-up 0.4s ease-out forwards;
+}
+
+/* Slide up for modals */
+@keyframes slide-up {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* ===== Lagtrekning / Draft-skjerm ===== */
+
+/* P1-selektor: roterende glødende kant */
+@keyframes draft-glint {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 18px 1px currentColor, inset 0 0 14px 0 currentColor;
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 32px 4px currentColor, inset 0 0 22px 2px currentColor;
+  }
+}
+.animate-draft-glint {
+  animation: draft-glint 0.55s ease-in-out infinite;
+}
+
+/* Spiller "popper" ned i slot */
+@keyframes draft-popin {
+  0% {
+    transform: translateY(28%) scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-4%) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.animate-draft-popin {
+  animation: draft-popin 0.45s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+
+/* "LAG KOMPLETT"-flash på lagtittelen */
+@keyframes draft-flash {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  25%,
+  75% {
+    opacity: 0.3;
+    filter: brightness(2);
+  }
+}
+.animate-draft-flash {
+  animation: draft-flash 0.32s steps(1) 3;
+}
+
+/* PRESS START: pulserende */
+@keyframes draft-pressstart {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.97);
+  }
+}
+.animate-draft-pressstart {
+  animation: draft-pressstart 1.1s ease-in-out infinite;
+}
+
+/* Reveal-panel: fade-bakgrunn + kort som zoomer inn */
+@keyframes draft-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-draft-fade {
+  animation: draft-fade 0.2s ease-out both;
+}
+@keyframes draft-revealcard {
+  0% {
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.animate-draft-revealcard {
+  animation: draft-revealcard 0.4s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+
+/* Stat-barer fyller seg opp (bredde via --bar-w) */
+@keyframes draft-statfill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--bar-w, 50%);
+  }
+}
+.animate-draft-statfill {
+  width: var(--bar-w, 50%);
+  animation: draft-statfill 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* VS-skjerm: lag sklir inn, VS-merket slår til */
+@keyframes draft-slide-left {
+  from {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-draft-slide-left {
+  animation: draft-slide-left 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes draft-slide-right {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-draft-slide-right {
+  animation: draft-slide-right 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes draft-vsslam {
+  0% {
+    transform: scale(3) rotate(-12deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(0.85) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+.animate-draft-vsslam {
+  animation: draft-vsslam 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) 0.25s both;
+}
+
+/* Screen-shake ved lock-in */
+@keyframes draft-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 4px); }
+  40% { transform: translate(6px, -4px); }
+  60% { transform: translate(-5px, -3px); }
+  80% { transform: translate(5px, 3px); }
+}
+.animate-draft-shake {
+  animation: draft-shake 0.4s ease-in-out;
+}
+
+/* Grid-kort kaskaderer inn */
+@keyframes draft-cardin {
+  from {
+    transform: translateY(18px) scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.animate-draft-cardin {
+  animation: draft-cardin 0.45s cubic-bezier(0.22, 1.2, 0.36, 1) backwards;
+}
+
+/* Hype-callout som slår inn */
+@keyframes draft-callout {
+  0% { transform: scale(2.4) rotate(-6deg); opacity: 0; }
+  45% { transform: scale(0.92) rotate(3deg); opacity: 1; }
+  70% { transform: scale(1.05) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-draft-callout {
+  animation: draft-callout 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+/* Ambient lagfarget glød som "puster" */
+@keyframes draft-ambient {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+.animate-draft-ambient {
+  animation: draft-ambient 5s ease-in-out infinite;
+}
+
+/* Diagonale speed-lines som glir sakte */
+@keyframes draft-speedlines {
+  from { background-position: 0 0; }
+  to { background-position: 240px -120px; }
+}
+.animate-draft-speedlines {
+  animation: draft-speedlines 9s linear infinite;
+}
+
+/* Mystery-box: scanline som sveiper i tom slot */
+@keyframes draft-scan {
+  0% { transform: translateY(-130%); }
+  100% { transform: translateY(330%); }
+}
+.animate-draft-scan {
+  animation: draft-scan 2.6s ease-in-out infinite;
+}
+
+/* Mystery-box: "?" som pulserer */
+@keyframes draft-mystery {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.07); }
+}
+.animate-draft-mystery {
+  animation: draft-mystery 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-draft-ambient,
+  .animate-draft-speedlines,
+  .animate-draft-scan,
+  .animate-draft-mystery,
+  .animate-draft-glint,
+  .animate-draft-popin,
+  .animate-draft-flash,
+  .animate-draft-pressstart,
+  .animate-draft-revealcard,
+  .animate-draft-statfill,
+  .animate-draft-slide-left,
+  .animate-draft-slide-right,
+  .animate-draft-vsslam,
+  .animate-draft-shake,
+  .animate-draft-cardin,
+  .animate-draft-callout {
+    animation: none;
+  }
+  .animate-draft-statfill {
+    width: var(--bar-w, 50%);
+  }
+}

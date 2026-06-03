@@ -1,7 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Home, Map, Info, CalendarDays, ExternalLink } from "lucide-react";
+import {
+  Home,
+  Map,
+  Info,
+  CalendarDays,
+  ExternalLink,
+  Gamepad2,
+  LogOut,
+} from "lucide-react";
+import { useAuth } from "@/components/AuthProvider";
+import { logout } from "@/lib/auth/actions";
 
 const navItems = [
   { href: "#villa", label: "Villa", icon: Home },
@@ -11,6 +21,7 @@ const navItems = [
 ];
 
 export default function Navigation() {
+  const { user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -88,11 +99,40 @@ export default function Navigation() {
                   </a>
                 );
               })}
+              <div className="w-px h-5 bg-white/10 mx-2" />
+              <a
+                href="/leker"
+                className="flex items-center gap-2 px-5 py-2.5 text-sm rounded-xl transition-all text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40"
+              >
+                <Gamepad2 className="w-4 h-4" />
+                Leker
+              </a>
+              {user && (
+                <>
+                  <div className="w-px h-5 bg-white/10 mx-2" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-zinc-400">
+                      Hei,{" "}
+                      <span className="text-white font-medium">
+                        {user.name.split(" ")[0]}
+                      </span>
+                    </span>
+                    <form action={logout}>
+                      <button
+                        type="submit"
+                        className="p-2 text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                        title="Logg ut"
+                      >
+                        <LogOut className="w-4 h-4" />
+                      </button>
+                    </form>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
       </nav>
-
 
       {/* Mobile: Bottom navigation bar - alltid synlig */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
@@ -100,6 +140,25 @@ export default function Navigation() {
         <div className="h-6 bg-gradient-to-t from-[#0a0a0b] to-transparent" />
 
         <div className="bg-[#0a0a0b]/95 backdrop-blur-xl border-t border-white/10 pb-safe">
+          {/* Brukerindikator på mobil */}
+          {user && (
+            <div className="flex items-center justify-between px-4 pt-2 pb-1">
+              <span className="text-xs text-zinc-500">
+                Logget inn som{" "}
+                <span className="text-zinc-300 font-medium">
+                  {user.name.split(" ")[0]}
+                </span>
+              </span>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
+                >
+                  Logg ut
+                </button>
+              </form>
+            </div>
+          )}
           <div className="flex justify-around items-center py-2 px-4">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("#", "");
@@ -107,23 +166,40 @@ export default function Navigation() {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all"
+                  className="flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all"
                 >
-                  <div className={`p-2.5 rounded-xl transition-all ${
-                    isActive ? "bg-orange-500/20" : ""
-                  }`}>
-                    <item.icon className={`w-5 h-5 transition-all ${
-                      isActive ? "text-orange-500" : "text-zinc-500"
-                    }`} />
+                  <div
+                    className={`p-2.5 rounded-xl transition-all ${
+                      isActive ? "bg-orange-500/20" : ""
+                    }`}
+                  >
+                    <item.icon
+                      className={`w-5 h-5 transition-all ${
+                        isActive ? "text-orange-500" : "text-zinc-500"
+                      }`}
+                    />
                   </div>
-                  <span className={`text-[10px] font-medium transition-colors ${
-                    isActive ? "text-orange-500" : "text-zinc-500"
-                  }`}>
+                  <span
+                    className={`text-[10px] font-medium transition-colors ${
+                      isActive ? "text-orange-500" : "text-zinc-500"
+                    }`}
+                  >
                     {item.label}
                   </span>
                 </a>
               );
             })}
+            <a
+              href="/leker"
+              className="flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all"
+            >
+              <div className="p-2.5 rounded-xl bg-amber-500/10">
+                <Gamepad2 className="w-5 h-5 text-amber-400" />
+              </div>
+              <span className="text-[10px] font-medium text-amber-400">
+                Leker
+              </span>
+            </a>
           </div>
         </div>
       </nav>
