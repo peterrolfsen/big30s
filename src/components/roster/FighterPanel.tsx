@@ -114,8 +114,23 @@ export default function FighterPanel({
   // Video spilles ÉN gang; når den er ferdig vises bildet i stedet.
   const videoSrc =
     videoFailed || videoEnded ? null : playerVideoSrc(player.video);
-  // Lydklipp spilles over bildet (når spilleren ikke har video).
-  const audioSrc = videoSrc ? null : playerAudioSrc(player.audio);
+  // Lydklipp spilles SAMTIDIG som videoen (eller over bildet om ingen video).
+  const audioSrc = playerAudioSrc(player.audio);
+
+  // onMediaEnd skal kalles ÉN gang — først når både video og lyd er ferdige,
+  // slik at Melee-musikken ikke gjenopptas midt i lydklippet.
+  const hasVideo = !!playerVideoSrc(player.video);
+  const hasAudio = !!audioSrc;
+  const mediaFiredRef = useRef(false);
+  const videoDoneRef = useRef(false);
+  const audioDoneRef = useRef(false);
+  const reportMediaEnd = () => {
+    if (mediaFiredRef.current) return;
+    if (hasVideo && !videoDoneRef.current) return;
+    if (hasAudio && !audioDoneRef.current) return;
+    mediaFiredRef.current = true;
+    onMediaEnd?.();
+  };
 
   // Beste stat (for uthevning) — første med høyest verdi.
   const maxStat = Math.max(...STAT_LABELS.map((s) => statValue(player, s.key)));
@@ -141,11 +156,13 @@ export default function FighterPanel({
                 preload="auto"
                 onEnded={() => {
                   setVideoEnded(true);
-                  onMediaEnd?.();
+                  videoDoneRef.current = true;
+                  reportMediaEnd();
                 }}
                 onError={() => {
                   setVideoFailed(true);
-                  onMediaEnd?.(); // start musikken igjen hvis videoen feiler
+                  videoDoneRef.current = true;
+                  reportMediaEnd(); // start musikken igjen hvis videoen feiler
                 }}
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -159,8 +176,14 @@ export default function FighterPanel({
               <audio
                 src={audioSrc}
                 autoPlay
-                onEnded={onMediaEnd}
-                onError={onMediaEnd}
+                onEnded={() => {
+                  audioDoneRef.current = true;
+                  reportMediaEnd();
+                }}
+                onError={() => {
+                  audioDoneRef.current = true;
+                  reportMediaEnd();
+                }}
               />
             )}
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent" />
